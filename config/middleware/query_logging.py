@@ -18,20 +18,17 @@ class QueryLoggingMiddleware:
 
         if "http://testserver" not in request.build_absolute_uri():
             date = datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+            request_url = request.build_absolute_uri()
+            remote_addr = request.META.get("REMOTE_ADDR", "Неизвестно")
+            user = request.user if request.user.is_authenticated else "Аноним"
+
             if response.status_code >= 400:
                 logger.error(
                     f"{date}, "
-                    f"Запрос: {request.method} {
-                        request.build_absolute_uri()
-                    }, "
-                    f"IP-адрес: {
-                        request.META.get('REMOTE_ADDR', 'Неизвестно')
-                    }, "
+                    f"Запрос: {request.method} {request_url}, "
+                    f"IP-адрес: {remote_addr}, "
                     f"Статус ответа: {response.status_code}, "
-                    f"Пользователь: {
-                        request.user if request.user.is_authenticated
-                        else 'Аноним'
-                    }, "
+                    f"Пользователь: {user}, "
                     f"Параметры POST: {dict(request.POST)}"
                 )
             else:
@@ -39,9 +36,7 @@ class QueryLoggingMiddleware:
                 queries = len(connection.queries)
                 logger.info(
                     f"{date}, "
-                    f"Запрос: {request.method} {
-                        request.build_absolute_uri()
-                    }, "
+                    f"Запрос: {request.method} {request_url}, "
                     f"Время выполнения: {total_time:.2f}s, "
                     f"SQL запросов: {queries}."
                 )
