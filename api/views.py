@@ -10,8 +10,15 @@ from rest_framework_simplejwt.tokens import AccessToken
 from user_app.models import User
 
 from .redoc_schema import REDOC_SCHEMA
-from .serializers import (InviteCodeSerializer, TokenSerializer,
-                          UserReadSerializer, UserSerializer)
+from .serializers import (
+    InviteCodeSerializer,
+    TokenSerializer,
+    UserReadSerializer,
+    UserSerializer
+)
+
+DEFAULT_CODE = 1111
+SIMULATED_DELAY = 2
 
 
 class UsersViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
@@ -59,11 +66,11 @@ class UsersViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
         user = get_object_or_404(User, phone=request.data["phone"])
 
         # Имитация задержки
-        time.sleep(2)
+        time.sleep(SIMULATED_DELAY)
 
         # Код должен генерироваться случайно,
         # но так как его некуда отправлять указан статичный
-        user.confirmation_code = 1111
+        user.confirmation_code = DEFAULT_CODE
         user.save()
         return Response({"detail": "Код отправлен"}, status=status.HTTP_200_OK)
 

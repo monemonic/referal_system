@@ -1,7 +1,7 @@
-from rest_framework import serializers
-from user_app.models import User, Invite
 from django.shortcuts import get_object_or_404
+from rest_framework import serializers
 
+from user_app.models import Invite, User
 from user_app.validators import validate_phone
 
 

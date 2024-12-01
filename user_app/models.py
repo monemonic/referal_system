@@ -7,7 +7,7 @@ from .constants import (
     LENGTH_CONFIRMATION_CODE,
     LENGTH_INVITE_CODE,
     PHONE_NUMBER_MAX_LENGTH,
-    PHONE_NUMBER_MIN_LENGTH,
+    PHONE_NUMBER_MIN_LENGTH
 )
 from .validators import validate_phone
 
