@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from user_app.models import Invite, User
 from user_app.validators import validate_phone
@@ -9,7 +10,14 @@ class UserSerializer(serializers.ModelSerializer):
     """Сериалайзер пользователя."""
 
     phone = serializers.CharField(
-        validators=[validate_phone], help_text="Номер телефона"
+        validators=[
+            validate_phone,
+            UniqueValidator(
+                queryset=User.objects.all(),
+                message='Пользователь уже зарегистрирован.'
+            )
+        ],
+        help_text="Номер телефона"
     )
 
     class Meta:
