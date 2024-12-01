@@ -42,10 +42,14 @@ class QueryLoggingMiddleware:
                 )
 
                 for query in connection.queries:
+                    sql_snippet = (
+                        query['sql'][:100] + "..." if len(query['sql']) > 100
+                        else query['sql']
+                    )
+                    query_time = query['time']
                     logger.debug(
-                        f"SQL: {query['sql'][:100]}... | Время: {
-                            query['time']
-                        }с"
+                        f"SQL: {sql_snippet} | "
+                        f"Время: {query_time}с"
                     )
 
         return response
