@@ -22,16 +22,24 @@ services:
     depends_on:
       db_dev:
         condition: service_healthy
+    volumes:
+      - static:/static
+      - media:/app/media
 
   gateway_dev:
     build:
-      context: docker/nginx_dev
+      context: docker/nginx_dev/
       dockerfile: Dockerfile
     env_file: .env
     depends_on:
       - backend_dev
     ports:
       - "8000:80"
+    volumes:
+      - static:/static
+      - media:/media
 
 volumes:
   pg-data:
+  static:
+  media:
