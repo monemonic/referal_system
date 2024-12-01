@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   db_dev:
@@ -7,7 +7,7 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -28,7 +28,7 @@ services:
       context: docker/nginx_dev
       dockerfile: Dockerfile
     env_file: .env
-    depends_on: 
+    depends_on:
       - backend_dev
     ports:
       - "8000:80"

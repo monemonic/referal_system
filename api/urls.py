@@ -6,16 +6,16 @@ from rest_framework.routers import DefaultRouter
 
 from .views import UsersViewSet
 
-app_name = 'api'
+app_name = "api"
 
 router = DefaultRouter()
-router.register('users', UsersViewSet, basename='users')
+router.register("users", UsersViewSet, basename="users")
 
 
 schema_view = get_schema_view(
     openapi.Info(
         title="API Referal system",
-        default_version='v1',
+        default_version="v1",
         description="API documentation for Referal system",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@yourdomain.com"),
@@ -27,9 +27,9 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path(
-        'redoc/',
-        schema_view.with_ui('redoc', cache_timeout=0),
-        name='redoc-schema'
+        "redoc/",
+        schema_view.with_ui("redoc", cache_timeout=0),
+        name="redoc-schema"
     ),
-    path('', include(router.urls)),
+    path("", include(router.urls)),
 ]
